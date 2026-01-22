@@ -150,28 +150,20 @@ nav {
   justify-content: center;
   width: 50px;
   height: 50px;
-  
-  /* Gradient Background */
   background: linear-gradient(135deg, var(--primary), var(--accent));
-  
   color: white;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   letter-spacing: -1px;
   text-decoration: none;
-  
-  /* Shape & Shadow */
-  border-radius: 12px; /* Rounded corners like an App Icon */
+  border-radius: 12px; 
   box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
-  
-  /* Animation Physics */
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
 }
 
-/* Shine Effect on Hover */
 .logo a::before {
   content: '';
   position: absolute;
@@ -890,8 +882,8 @@ footer .container {
 .achievement-notification {
     position: fixed;
     top: 30px;
-    right: -400px; /* Start off-screen */
-    background: #212529; /* Dark BG */
+    right: -400px;
+    background: #212529; 
     border: 1px solid var(--primary);
     border-left: 5px solid var(--accent);
     border-radius: 8px;
@@ -908,7 +900,7 @@ footer .container {
 }
 
 .achievement-notification.show {
-    right: 30px; /* Slide in */
+    right: 30px;
 }
 
 .achievement-icon {
@@ -946,11 +938,10 @@ footer .container {
     color: #adb5bd;
 }
 
-/* Particles Container */
 .achievement-particles {
     position: fixed;
-    bottom: 80px;
-    right: 180px;
+    top: 20px;
+    right: 20px;
     width: 1px;
     height: 1px;
     z-index: 9998;

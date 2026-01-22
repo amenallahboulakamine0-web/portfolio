@@ -95,7 +95,7 @@ function createAchievementParticles() {
         
         const angle = Math.random() * Math.PI * 2;
         const distance = 40 + Math.random() * 80;
-        const duration = 600 + Math.random() * 600;
+        const duration = 1000 + Math.random() * 600;
         
         particle.animate([
             { 
