@@ -54,7 +54,7 @@ function showWelcomeAchievement() {
         <div class="achievement-icon">🚀</div>
         <div class="achievement-content">
             <div class="achievement-title">Achievement unlocked !</div>
-            <div class="achievement-name"> Welcome brazar!</div>
+            <div class="achievement-name"> Welcome to my portolio!</div>
             <div class="achievement-desc">first visit to my portfolio</div>
         </div>
         <div class="achievement-progress"></div>
@@ -116,29 +116,6 @@ function createAchievementParticles() {
         particlesContainer.remove();
     }, 1200);
 }
-
-function playAchievementSound() {
-    try {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
-        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1);
-        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2);
-        
-        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.5);
-    } catch (error) {
-    }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(showWelcomeAchievement, 1000);
 });
