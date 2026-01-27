@@ -68,7 +68,6 @@ function showWelcomeAchievement() {
     
     createAchievementParticles();
     
-    playAchievementSound();
     
     sessionStorage.setItem('achievement_shown', 'true');
     
