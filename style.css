@@ -1071,48 +1071,41 @@ footer .container {
     grid-template-columns: 1fr;
   }
 }
-/* --- MOBILE FIXES --- */
 @media (max-width: 768px) {
-  
-  /* 1. Fix the Header cutting off content */
-  header {
-    clip-path: none; /* Removes the diagonal cut on mobile so buttons fit */
-    padding-bottom: 60px; /* Gives space at the bottom */
-    border-bottom-left-radius: 30px; /* Optional: Adds a curve instead of a slice */
+    header {
+    clip-path: none;
+    padding-bottom: 60px; 
+    border-bottom-left-radius: 30px; 
     border-bottom-right-radius: 30px;
   }
 
-  /* 2. Fix Name Wrapping */
   header h1 {
     font-size: 2rem;
-    word-wrap: break-word; /* Forces the name to wrap if it's too long */
-    padding: 0 10px; /* Adds breathing room on sides */
+    word-wrap: break-word;
+    padding: 0 10px; 
     line-height: 1.2;
   }
 
-  /* 3. Fix the CV/Social Buttons */
   .header-links {
     width: 100%;
     flex-direction: column;
     align-items: center;
   }
 
-  /* Make buttons full width on mobile for easier tapping */
   .header-links a {
     width: 90%; 
     justify-content: center;
     margin-bottom: 10px;
   }
 
-  /* 4. Fix Achievement Popup Width */
   .achievement-notification {
-    width: 90%; /* Responsive width */
-    right: -100%; /* Start off screen */
-    left: 5%; /* Center it roughly when active */
+    width: 90%;
+    right: -100%; 
+    left: 5%;
   }
   
   .achievement-notification.show {
-    right: auto; /* Reset right */
-    left: 5%; /* Keep centered */
+    right: auto;
+    left: 5%;
   }
 }
