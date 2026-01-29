@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
@@ -39,27 +38,29 @@
       <div class="profile-container">
         <img src="./images/hahi.jpg" alt="Amenallah Boulakamine" class="profile">
         <h1>Amenallah Boulakamine</h1>
-        <p class="tagline">Étudiant en programmation informatique (B1) | Passionné par le Développement web</p>
+        <p class="tagline">Étudiant en programmation informatique (B1) | Futur Développeur Full Stack</p>
         
+        <div class="cta-container">
+            <a href="#contact" class="stage-cta">
+                <i class="fas fa-briefcase"></i> Recherche Stage : Développeur Web (2 Mois)
+            </a>
+        </div>
+
         <div class="header-badges">
           <div class="badge">Développement Web</div>
           <div class="badge">JavaScript</div>
           <div class="badge">HTML/CSS</div>
-          <div class="badge">À la recherche d'un stage</div>
         </div>
         
         <div class="header-links">
-          <a href="./images/cv (2).pdf" target="_blank" download="CV_Amenallah_Boulakamine.pdf" style="background: rgba(255, 255, 255, 0.3); border-color: rgba(255, 255, 255, 0.5);">
-            <i class="fas fa-file-download"></i> Télécharger mon CV
+          <a href="./images/cv (2).pdf" target="_blank" download="CV_Amenallah_Boulakamine.pdf">
+            <i class="fas fa-file-download"></i> CV
           </a>
           <a href="https://www.linkedin.com/in/amenallah-boulakamine" target="_blank">
             <i class="fab fa-linkedin"></i> LinkedIn
           </a>
           <a href="https://github.com/amenallahboulakamine0-web" target="_blank">
             <i class="fab fa-github"></i> GitHub
-          </a>
-          <a href="#contact">
-            <i class="fas fa-envelope"></i> Me contacter(ง ͠° ͟ل͜ ͡°)ง
           </a>
         </div>
       </div>
@@ -76,7 +77,7 @@
       <div class="about-content">
         <div class="about-text">
           <h3>Passionné par le code et l'innovation</h3>
-          <p>Je suis un étudiant en programmation informatique motivé, à la recherche d'un <span class="about-highlight">stage de 2 mois</span> pour appliquer mes compétences et approfondir mes connaissances dans un environnement professionnel.</p>
+          <p>Je suis un étudiant en programmation informatique motivé, à la recherche d'un <span class="about-highlight">stage de 2 mois en Développement Web</span> pour appliquer mes compétences et approfondir mes connaissances dans un environnement professionnel.</p>
           <p>Passionné par le développement web, j'aime créer des projets pratiques et explorer de nouvelles technologies. Mon objectif est de contribuer à des projets innovants tout en continuant à développer mes compétences techniques.</p>
           <p>Je suis particulièrement intéressé par le développement front-end et j'aspire à devenir un développeur full-stack compétent.</p>
           <a href="#contact" class="btn">Me contacter</a>
@@ -97,88 +98,51 @@
   <section id="skills">
     <div class="container">
       <div class="section-title">
-        <h2>Mes Compétences</h2>
-        <p>Un aperçu de mes compétences techniques et linguistiques</p>
+        <h2>Mes compétences</h2>
+        <p>Les technologies que j'utilise au quotidien</p>
       </div>
       
-      <div class="skills-container">
-        <div class="skill-category">
-          <h3><i class="fas fa-code"></i> Développement Web</h3>
-          <div class="skills-list">
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">HTML</span>
-                <span class="skill-percent">65%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="65"></div>
-              </div>
+      <div class="skills-grid-wrapper">
+        <div class="skill-group">
+          <h3><i class="fas fa-globe"></i> Web Development</h3>
+          <div class="skill-grid">
+            <div class="skill-card">
+              <i class="fab fa-html5" style="color: #E34F26;"></i>
+              <span>HTML5</span>
             </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">CSS</span>
-                <span class="skill-percent">65%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="65"></div>
-              </div>
+            <div class="skill-card">
+              <i class="fab fa-css3-alt" style="color: #1572B6;"></i>
+              <span>CSS3</span>
             </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">JavaScript</span>
-                <span class="skill-percent">30%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="30"></div>
-              </div>
+            <div class="skill-card">
+              <i class="fab fa-js" style="color: #F7DF1E;"></i>
+              <span>JavaScript</span>
+            </div>
+            <div class="skill-card">
+              <i class="fas fa-database" style="color: #00758F;"></i>
+              <span>MySQL</span>
             </div>
           </div>
         </div>
-        
-        <div class="skill-category">
-          <h3><i class="fas fa-laptop-code"></i> Langages de Programmation</h3>
-          <div class="skills-list">
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">C</span>
-                <span class="skill-percent">45%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="45"></div>
-              </div>
+
+        <div class="skill-group">
+          <h3><i class="fas fa-terminal"></i> Système & Outils</h3>
+          <div class="skill-grid">
+            <div class="skill-card">
+              <i class="fas fa-c" style="color: #555555;"></i>
+              <span>Langage C</span>
             </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">Shell</span>
-                <span class="skill-percent">60%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="60"></div>
-              </div>
+            <div class="skill-card">
+              <i class="fas fa-terminal" style="color: #4EAA25;"></i>
+              <span>Bash/Shell</span>
             </div>
-          </div>
-        </div>
-        
-        <div class="skill-category">
-          <h3><i class="fas fa-tools"></i> Autres Compétences</h3>
-          <div class="skills-list">
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">bash</span>
-                <span class="skill-percent">50%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="50"></div>
-              </div>
+            <div class="skill-card">
+              <i class="fab fa-git-alt" style="color: #F05032;"></i>
+              <span>Git</span>
             </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">Anglais</span>
-                <span class="skill-percent">100%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="100"></div>
-              </div>
+            <div class="skill-card">
+              <i class="fab fa-linux" style="color: #FCC624;"></i>
+              <span>Linux</span>
             </div>
           </div>
         </div>
@@ -207,13 +171,14 @@
               <span class="tech-tag">API</span>
             </div>
             <p>Création d'un site web qui affiche les Pokémon en utilisant une API. J’ai programmé la récupération des données en JavaScript, ajouté une recherche et des filtres par type, et fait une fonctionnalité pour créer des équipes.</p>
-            <div class="project-links">
-              <a href="https://github.com/amenallahboulakamine0-web/Pok-dex-project" target="_blank">
-                <i class="fab fa-github"></i> Code source
-              </a>
-              <a href="https://amenallahboulakamine0-web.github.io/Pok-dex-project/" target="_blank">
-                <i class="fas fa-external-link-alt"></i> Voir le projet
-              </a>
+            <div class="project-actions">
+                <button class="btn-tech-details">
+                    <i class="fas fa-code"></i> Détails Techniques
+                </button>
+                <div class="project-links">
+                  <a href="https://github.com/amenallahboulakamine0-web/Pok-dex-project" target="_blank"><i class="fab fa-github"></i></a>
+                  <a href="https://amenallahboulakamine0-web.github.io/Pok-dex-project/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                </div>
             </div>
           </div>
         </div>
@@ -226,12 +191,14 @@
             <div class="project-tech">
               <span class="tech-tag">C</span>
             </div>
-            <p>
-			Reproduction en C de la commande UNIX `cat`, capable de lire l’entrée standard, des fichiers ou `-`, puis d’afficher le contenu sur la sortie standard. Le programme gère aussi les options `-h`, `-E` et `-T` pour offrir un usage plus pratique.</p>
-            <div class="project-links">
-              <a href="https://git.ecole-89.com/amenallah.boulakamine/2025_cat" target="_blank">
-                <i class="fab fa-github"></i> Code source
-              </a>
+            <p>Reproduction en C de la commande UNIX `cat`, capable de lire l’entrée standard, des fichiers ou `-`, puis d’afficher le contenu sur la sortie standard. Le programme gère aussi les options `-h`, `-E` et `-T` pour offrir un usage plus pratique.</p>
+            <div class="project-actions">
+                <button class="btn-tech-details">
+                    <i class="fas fa-code"></i> Détails Techniques
+                </button>
+                <div class="project-links">
+                  <a href="https://git.ecole-89.com/amenallah.boulakamine/2025_cat" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
             </div>
           </div>
         </div>
@@ -245,15 +212,18 @@
               <span class="tech-tag">C</span>
             </div>
             <p>Programme en C lisant un labyrinthe depuis un fichier, vérifiant sa validité, trouvant un chemin avec l’algorithme « tenir la gauche » et affichant le chemin le plus court jusqu’à la sortie.</p>
-            <div class="project-links">
-              <a href="https://git.ecole-89.com/amenallah.boulakamine/2025_maze" target="_blank">
-                <i class="fab fa-github"></i> Code source
-              </a>
+            <div class="project-actions">
+                <button class="btn-tech-details">
+                    <i class="fas fa-code"></i> Détails Techniques
+                </button>
+                <div class="project-links">
+                  <a href="https://git.ecole-89.com/amenallah.boulakamine/2025_maze" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
             </div>
           </div>
         </div>
 
-                <div class="project-card">
+        <div class="project-card">
           <div class="project-image">
             <img src="./images/bdd.png" alt="Cash Register Project">
           </div>
@@ -263,18 +233,18 @@
               <span class="tech-tag">MYSQL</span>
               <span class="tech-tag">dbeaver</span>
             </div>
-            <p>
-			 Implémentation d'une base de données MySQL pour la gestion scolaire complète, avec des données de test et requêtes fonctionnelles</p>
-            <div class="project-links">
-              <a href="https://github.com/amenallahboulakamine0-web/cash-register" target="_blank">
-                <i class="fab fa-github"></i> Code source
-              </a>
+            <p>Implémentation d'une base de données MySQL pour la gestion scolaire complète, avec des données de test et requêtes fonctionnelles</p>
+            <div class="project-actions">
+                <button class="btn-tech-details">
+                    <i class="fas fa-code"></i> Détails Techniques
+                </button>
+                <div class="project-links">
+                  <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
             </div>
           </div>
         </div>
 
-
-        
         <div class="project-card">
           <div class="project-image">
             <img src="./images/cash.jpg" alt="Cash Register Project">
@@ -287,16 +257,17 @@
               <span class="tech-tag">CSS</span>
             </div>
             <p>Les utilisateurs peuvent ajouter des articles, calculer automatiquement le total, et consulter l’historique des ventes via une interface simple et intuitive</p>
-            <div class="project-links">
-              <a href="https://github.com/amenallahboulakamine0-web/cash-register" target="_blank">
-                <i class="fab fa-github"></i> Code source
-              </a>
-              <a href="https://amenallahboulakamine0-web.github.io/cash-register/" target="_blank">
-                <i class="fas fa-external-link-alt"></i> Voir le projet
-              </a>
+            <div class="project-actions">
+                  <button class="btn-tech-details">
+                      <i class="fas fa-code"></i> Détails Techniques
+                  </button>
+                  <div class="project-links">
+                    <a href="https://github.com/amenallahboulakamine0-web/cash-register" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://amenallahboulakamine0-web.github.io/cash-register/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                  </div>
+              </div>
             </div>
           </div>
-        </div>
         
         <div class="project-card">
           <div class="project-image">
@@ -310,16 +281,18 @@
               <span class="tech-tag">CSS</span>
             </div>
             <p>Démineur classique avec interface réactive, réalisé dans le cadre d’un projet scolaire encadré, qui m’a permis d’apprendre la manipulation du DOM et la création d’interfaces interactives</p>
-            <div class="project-links">
-              <a href="https://github.com/amenallahboulakamine0-web/demo" target="_blank">
-                <i class="fab fa-github"></i> Code source
-              </a>
-              <a href="https://amenallahboulakamine0-web.github.io/demo/" target="_blank">
-                <i class="fas fa-external-link-alt"></i> Voir le projet
-              </a>
+            <div class="project-actions">
+                  <button class="btn-tech-details">
+                      <i class="fas fa-code"></i> Détails Techniques
+                  </button>
+                  <div class="project-links">
+                    <a href="https://github.com/amenallahboulakamine0-web/demo" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://amenallahboulakamine0-web.github.io/demo/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                  </div>
+              </div>
             </div>
           </div>
-        </div>
+
       </div>
     </div>
   </section>
@@ -406,6 +379,24 @@
             </div>
           </div>
         </div>
+          <div class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <div id="projectModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 id="modalTitle">Titre du Projet</h2>
+        <div class="modal-body">
+            <div class="modal-tags" id="modalTags"></div>
+            <p id="modalDesc" class="modal-description"></p>
+            <div class="modal-tech-details">
+                <h4><i class="fas fa-cogs"></i> Défis Techniques :</h4>
+                <ul id="modalChallenges"></ul>
+            </div>
+        </div>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

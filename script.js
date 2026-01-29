@@ -1,47 +1,120 @@
+// --- PROJECT DATA (For Modals) ---
+const projectData = {
+    "pokedex": {
+        title: "Application Pokédex",
+        description: "Une Single Page Application (SPA) qui permet de parcourir la liste des Pokémon. L'objectif était de maîtriser la consommation d'API REST et la manipulation dynamique du DOM.",
+        tags: ["JavaScript", "Fetch API", "CSS Grid", "Async/Await"],
+        challenges: [
+            "Gestion des appels asynchrones avec Fetch",
+            "Mise en place d'une barre de recherche filtrant les résultats en temps réel",
+            "Affichage responsive des cartes Pokémon"
+        ]
+    },
+    "cat": {
+        title: "Clone de la commande 'cat'",
+        description: "Reproduction fidèle du comportement de l'outil système UNIX 'cat'. Ce projet m'a permis de comprendre la gestion des fichiers et des entrées/sorties standards en C.",
+        tags: ["Langage C", "System Calls", "Buffer Management"],
+        challenges: [
+            "Lecture optimisée via buffer pour éviter la latence",
+            "Gestion des erreurs (fichier introuvable, permissions)",
+            "Implémentation des flags -E (fin de ligne) et -n (numérotation)"
+        ]
+    },
+    "maze": {
+        title: "Maze Solver (Labyrinthe)",
+        description: "Programme capable de lire un fichier map, de vérifier sa validité et de trouver le chemin de sortie le plus court.",
+        tags: ["Langage C", "Algorithmique", "Parsing"],
+        challenges: [
+            "Validation de la map (bords fermés, une seule entrée/sortie)",
+            "Implémentation de l'algorithme 'Main gauche' (Left-hand rule)",
+            "Gestion de l'allocation mémoire dynamique"
+        ]
+    },
+    "cash": {
+        title: "Cash Register Algorithm",
+        description: "Un défi algorithmique consistant à calculer le rendu de monnaie optimal à partir d'un fond de caisse défini.",
+        tags: ["JavaScript", "Logique", "Maths"],
+        challenges: [
+            "Gestion des imprécisions des nombres flottants en JS",
+            "Algorithme glouton pour rendre les plus grosses pièces en premier",
+            "Mise à jour dynamique de l'état de la caisse"
+        ]
+    },
+    "bdd": {
+        title: "Architecture Base de Données",
+        description: "Conception du modèle relationnel pour un système de gestion scolaire (élèves, notes, cours, profs).",
+        tags: ["SQL", "MySQL", "Merise"],
+        challenges: [
+            "Définition des clés étrangères et des contraintes d'intégrité",
+            "Normalisation des tables pour éviter la redondance",
+            "Écriture de requêtes complexes (Jointures)"
+        ]
+    }
+};
+
+// --- MODAL LOGIC ---
+const modal = document.getElementById('projectModal');
+const closeBtn = document.querySelector('.close-modal');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+const modalTags = document.getElementById('modalTags');
+const modalChallenges = document.getElementById('modalChallenges');
+
+// Open Modal
+document.querySelectorAll('.btn-tech-details').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        // Find the closest project card to get the ID
+        const card = e.target.closest('.project-card');
+        const projectId = card.getAttribute('data-id');
+        const data = projectData[projectId];
+
+        if(data) {
+            modalTitle.textContent = data.title;
+            modalDesc.textContent = data.description;
+            
+            // Populate Tags
+            modalTags.innerHTML = data.tags.map(tag => 
+                `<span style="background:#eef2ff; color:#4361ee; padding:4px 8px; border-radius:4px; font-size:0.8em; margin-right:5px; font-weight:600;">${tag}</span>`
+            ).join('');
+
+            // Populate Challenges
+            modalChallenges.innerHTML = data.challenges.map(c => `<li>${c}</li>`).join('');
+            
+            modal.style.display = "block";
+        }
+    });
+});
+
+// Close Modal
+closeBtn.onclick = () => modal.style.display = "none";
+window.onclick = (e) => {
+    if (e.target == modal) modal.style.display = "none";
+}
+
+
+// --- MOBILE MENU ---
 const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
 const navLinks = document.querySelector('.nav-links');
 
 mobileMenuBtn.addEventListener('click', () => {
   navLinks.classList.toggle('active');
+  // Simple check to change icon based on state if desired
 });
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('active');
-  });
-});
 
+// --- SCROLL EFFECTS ---
 window.addEventListener('scroll', () => {
-  const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  
-  let current = '';
-  
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
-    
-    if (scrollY >= (sectionTop - 200)) {
-      current = section.getAttribute('id');
-    }
-  });
-  
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${current}`) {
-      link.classList.add('active');
-    }
-  });
+  const backToTopBtn = document.querySelector('.back-to-top');
+  if (window.scrollY > 500) {
+    backToTopBtn.classList.add('active');
+  } else {
+    backToTopBtn.classList.remove('active');
+  }
 });
 
-function animateSkills() {
-  const skillBars = document.querySelectorAll('.skill-progress');
-  
-  skillBars.forEach(bar => {
-    const width = bar.getAttribute('data-width');
-    bar.style.width = `${width}%`;
-  });
-}
+document.querySelector('.back-to-top').addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 function showWelcomeAchievement() {
     if (sessionStorage.getItem('achievement_shown')) {
@@ -118,75 +191,3 @@ function createAchievementParticles() {
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(showWelcomeAchievement, 1000);
 });
-
-const skillsSection = document.querySelector('#skills');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      animateSkills();
-    }
-  });
-}, { threshold: 0.3 });
-
-observer.observe(skillsSection);
-
-const backToTopBtn = document.querySelector('.back-to-top');
-
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 500) {
-    backToTopBtn.classList.add('active');
-  } else {
-    backToTopBtn.classList.remove('active');
-  }
-});
-
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-});
-
-const contactForm = document.getElementById('contactForm');
-
-contactForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const subject = document.getElementById('subject').value;
-  const message = document.getElementById('message').value;
-  
-  
-  alert(`Merci ${name} ! Votre message a été envoyé avec succès. Je vous répondrai dès que possible.`);
-  
-  contactForm.reset();
-});
-
-window.addEventListener('scroll', () => {
-  const scrolled = window.pageYOffset;
-  const parallax = document.querySelector('header');
-  const rate = scrolled * 0.5;
-  
-  parallax.style.transform = `translate3d(0px, ${rate}px, 0px)`;
-});
-
-const animateOnScroll = () => {
-  const elements = document.querySelectorAll('.skill-category, .project-card, .certificate-card');
-  
-  elements.forEach(element => {
-    const elementTop = element.getBoundingClientRect().top;
-    const elementVisible = 150;
-    
-    if (elementTop < window.innerHeight - elementVisible) {
-      element.classList.add('animate');
-    }
-  });
-};
-
-window.addEventListener('scroll', animateOnScroll);
-
-document.addEventListener('DOMContentLoaded', () => {
-  animateOnScroll();
-});
-
