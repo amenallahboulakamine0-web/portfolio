@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
 </head>
 <body>
 
@@ -33,16 +32,14 @@
     </div>
   </div>
 
-<header>
-    <div class="container">
+<header id="home"> <div class="container">
       <div class="profile-container">
         <img src="./images/hahi.jpg" alt="Amenallah Boulakamine" class="profile">
         <h1>Amenallah Boulakamine</h1>
         <p class="tagline">Étudiant en programmation informatique (B1) | Futur Développeur Full Stack</p>
         
         <div class="cta-container">
-            <a href="#contact" class="stage-cta">
-                <i class="fas fa-briefcase"></i> Recherche Stage : Développeur Web (2 Mois)
+            <a href="internship.html" class="stage-cta"> <i class="fas fa-briefcase"></i> Recherche Stage : Développeur Web (2 Mois)
             </a>
         </div>
 
@@ -150,153 +147,196 @@
     </div>
   </section>
 
-  <section id="projects">
+<section id="projects">
     <div class="container">
       <div class="section-title">
         <h2>Mes Projets</h2>
-        <p>Découvrez mes réalisations et projets personnels</p>
+        <p>Découvrez mes réalisations techniques et académiques</p>
       </div>
-      
+
+      <h3 class="category-title"><i class="fas fa-code"></i> Développement Web (Frontend)</h3>
       <div class="projects-container">
-        <div class="project-card">
+        
+        <div class="project-card" data-id="pokedex">
           <div class="project-image">
             <img src="./images/pokemon.jpeg" alt="Pokédex Project">
           </div>
           <div class="project-content">
-            <h3>Pokédex</h3>
+            <h3>Pokédex SPA</h3>
             <div class="project-tech">
               <span class="tech-tag">JavaScript</span>
-              <span class="tech-tag">HTML</span>
-              <span class="tech-tag">CSS</span>
-              <span class="tech-tag">API</span>
+              <span class="tech-tag">API REST</span>
+              <span class="tech-tag">CSS Grid</span>
             </div>
-            <p>Création d'un site web qui affiche les Pokémon en utilisant une API. J’ai programmé la récupération des données en JavaScript, ajouté une recherche et des filtres par type, et fait une fonctionnalité pour créer des équipes.</p>
+            <p>Application dynamique affichant des données Pokémon via une API externe. Comprend un système de recherche en temps réel et un filtrage par type.</p>
             <div class="project-actions">
-                <button class="btn-tech-details">
-                    <i class="fas fa-code"></i> Détails Techniques
-                </button>
-                <div class="project-links">
-                  <a href="https://github.com/amenallahboulakamine0-web/Pok-dex-project" target="_blank"><i class="fab fa-github"></i></a>
-                  <a href="https://amenallahboulakamine0-web.github.io/Pok-dex-project/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-          </div>
-        </div>
-        <div class="project-card">
-          <div class="project-image">
-            <img src="./images/cat.png" alt="Cash Register Project">
-          </div>
-          <div class="project-content">
-            <h3>Cat</h3>
-            <div class="project-tech">
-              <span class="tech-tag">C</span>
-            </div>
-            <p>Reproduction en C de la commande UNIX `cat`, capable de lire l’entrée standard, des fichiers ou `-`, puis d’afficher le contenu sur la sortie standard. Le programme gère aussi les options `-h`, `-E` et `-T` pour offrir un usage plus pratique.</p>
-            <div class="project-actions">
-                <button class="btn-tech-details">
-                    <i class="fas fa-code"></i> Détails Techniques
-                </button>
-                <div class="project-links">
-                  <a href="https://git.ecole-89.com/amenallah.boulakamine/2025_cat" target="_blank"><i class="fab fa-github"></i></a>
-                </div>
-            </div>
-          </div>
-        </div>
-                <div class="project-card">
-          <div class="project-image">
-            <img src="./images/maze.png" alt="Cash Register Project">
-          </div>
-          <div class="project-content">
-            <h3>Maze</h3>
-            <div class="project-tech">
-              <span class="tech-tag">C</span>
-            </div>
-            <p>Programme en C lisant un labyrinthe depuis un fichier, vérifiant sa validité, trouvant un chemin avec l’algorithme « tenir la gauche » et affichant le chemin le plus court jusqu’à la sortie.</p>
-            <div class="project-actions">
-                <button class="btn-tech-details">
-                    <i class="fas fa-code"></i> Détails Techniques
-                </button>
-                <div class="project-links">
-                  <a href="https://git.ecole-89.com/amenallah.boulakamine/2025_maze" target="_blank"><i class="fab fa-github"></i></a>
-                </div>
+              <button class="btn-tech-details">
+                <i class="fas fa-code"></i> Détails Techniques
+              </button>
+              <div class="project-links">
+                <a href="https://github.com/amenallahboulakamine0-web/Pok-dex-project" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://amenallahboulakamine0-web.github.io/Pok-dex-project/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="project-card">
-          <div class="project-image">
-            <img src="./images/bdd.png" alt="Cash Register Project">
-          </div>
-          <div class="project-content">
-            <h3>BDD d'une école</h3>
-            <div class="project-tech">
-              <span class="tech-tag">MYSQL</span>
-              <span class="tech-tag">dbeaver</span>
-            </div>
-            <p>Implémentation d'une base de données MySQL pour la gestion scolaire complète, avec des données de test et requêtes fonctionnelles</p>
-            <div class="project-actions">
-                <button class="btn-tech-details">
-                    <i class="fas fa-code"></i> Détails Techniques
-                </button>
-                <div class="project-links">
-                  <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card">
+        <div class="project-card" data-id="cash">
           <div class="project-image">
             <img src="./images/cash.jpg" alt="Cash Register Project">
           </div>
           <div class="project-content">
-            <h3>Cash Register Project</h3>
+            <h3>Cash Register</h3>
             <div class="project-tech">
               <span class="tech-tag">JavaScript</span>
-              <span class="tech-tag">HTML</span>
-              <span class="tech-tag">CSS</span>
+              <span class="tech-tag">Algorithme</span>
             </div>
-            <p>Les utilisateurs peuvent ajouter des articles, calculer automatiquement le total, et consulter l’historique des ventes via une interface simple et intuitive</p>
+            <p>Algorithme de caisse enregistreuse calculant le rendu de monnaie optimal selon le contenu du tiroir-caisse.</p>
             <div class="project-actions">
-                  <button class="btn-tech-details">
-                      <i class="fas fa-code"></i> Détails Techniques
-                  </button>
-                  <div class="project-links">
-                    <a href="https://github.com/amenallahboulakamine0-web/cash-register" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://amenallahboulakamine0-web.github.io/cash-register/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                  </div>
+              <button class="btn-tech-details">
+                <i class="fas fa-code"></i> Détails Techniques
+              </button>
+              <div class="project-links">
+                <a href="https://github.com/amenallahboulakamine0-web/cash-register" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://amenallahboulakamine0-web.github.io/cash-register/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
               </div>
             </div>
           </div>
-        
-        <div class="project-card">
+        </div>
+
+        <div class="project-card" data-id="demo">
           <div class="project-image">
             <img src="./images/demo.jpg" alt="Démineur Project">
           </div>
           <div class="project-content">
-            <h3>Démineur Project</h3>
+            <h3>Démineur</h3>
             <div class="project-tech">
               <span class="tech-tag">JavaScript</span>
-              <span class="tech-tag">HTML</span>
-              <span class="tech-tag">CSS</span>
+              <span class="tech-tag">Logique</span>
             </div>
-            <p>Démineur classique avec interface réactive, réalisé dans le cadre d’un projet scolaire encadré, qui m’a permis d’apprendre la manipulation du DOM et la création d’interfaces interactives</p>
+            <p>Récréation du jeu classique. Gestion de la grille, découverte récursive des cases vides et marquage des mines.</p>
             <div class="project-actions">
-                  <button class="btn-tech-details">
-                      <i class="fas fa-code"></i> Détails Techniques
-                  </button>
-                  <div class="project-links">
-                    <a href="https://github.com/amenallahboulakamine0-web/demo" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://amenallahboulakamine0-web.github.io/demo/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                  </div>
+              <button class="btn-tech-details">
+                <i class="fas fa-code"></i> Détails Techniques
+              </button>
+              <div class="project-links">
+                <a href="https://github.com/amenallahboulakamine0-web/demo" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://amenallahboulakamine0-web.github.io/demo/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
               </div>
             </div>
           </div>
+        </div>
 
+        <div class="project-card" data-id="piano">
+            <div class="project-image">
+              <img src="./images/piano.png" alt="Piano Tiles Project">
+            </div>
+            <div class="project-content">
+              <h3>Piano Tiles</h3>
+              <div class="project-tech">
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">DOM</span>
+                <span class="tech-tag">Game Loop</span>
+              </div>
+                <p>Jeu de rythme où le joueur doit cliquer sur les tuiles actives. Gestion de la vitesse, du score et des animations.</p>
+              <div class="project-actions">
+                <button class="btn-tech-details">
+                  <i class="fas fa-code"></i> Détails Techniques
+                </button>
+                <div class="project-links">
+                  <a href="https://github.com/amenallahboulakamine0-web/piano-tiles" target="_blank"><i class="fab fa-github"></i></a>
+                  <a href="https://amenallahboulakamine0-web.github.io/piano-tiles/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
+
+      <h3 class="category-title" style="margin-top: 60px;"><i class="fas fa-terminal"></i> Programmation Système (C)</h3>
+      <div class="projects-container">
+        
+        <div class="project-card" data-id="cat">
+          <div class="project-image">
+            <img src="./images/cat.png" alt="Cat Project">
+          </div>
+          <div class="project-content">
+            <h3>Cat Clone</h3>
+            <div class="project-tech">
+              <span class="tech-tag">Langage C</span>
+              <span class="tech-tag">Unix / Syscalls</span>
+              <span class="tech-tag">I/O</span>
+            </div>
+            <p>Recodage de la commande `cat`. Gestion des descripteurs de fichiers, lecture stdin/fichiers et implémentation des flags (-e, -t).</p>
+            <div class="project-actions">
+              <button class="btn-tech-details">
+                <i class="fas fa-code"></i> Détails Techniques
+              </button>
+              <div class="project-links">
+                <a href="https://git.ecole-89.com/amenallah.boulakamine/2025_cat" target="_blank">                  
+                  <img src="./images/forge.png" alt="Forge" width="24">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-id="maze">
+          <div class="project-image">
+            <img src="./images/maze.png" alt="Maze Project">
+          </div>
+          <div class="project-content">
+            <h3>Maze Solver</h3>
+            <div class="project-tech">
+              <span class="tech-tag">Langage C</span>
+              <span class="tech-tag">Algorithmique</span>
+              <span class="tech-tag">Mémoire</span>
+            </div>
+            <p>Résolution de labyrinthe : parsing de carte, algorithme de la main gauche et calcul du plus court chemin (propagation).</p>
+            <div class="project-actions">
+              <button class="btn-tech-details">
+                <i class="fas fa-code"></i> Détails Techniques
+              </button>
+              <div class="project-links">
+                <a href="https://git.ecole-89.com/amenallah.boulakamine/2025_maze" target="_blank">  
+                  <img src="./images/forge.png" alt="Forge" width="24">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <h3 class="category-title" style="margin-top: 60px;"><i class="fas fa-database"></i> Données & Architecture</h3>
+      <div class="projects-container">
+        <div class="project-card" data-id="bdd">
+          <div class="project-image">
+            <img src="./images/bdd.png" alt="Database Project">
+          </div>
+          <div class="project-content">
+            <h3>Architecture SGBD Scolaire</h3>
+            <div class="project-tech">
+              <span class="tech-tag">MySQL 8</span>
+              <span class="tech-tag">Dbeaver</span>
+              <span class="tech-tag">Relationnel</span>
+              <span class="tech-tag">Analytique</span>
+            </div>
+            <p>Conception d'une base de données complète (Utilisateurs, Notes, Absences) avec contraintes d'intégrité strictes et requêtes SQL complexes d'analyse.</p>
+            <div class="project-actions">
+              <button class="btn-tech-details">
+                <i class="fas fa-code"></i> Détails Techniques
+              </button>
+              <div class="project-links">
+                <a href="https://github.com/amenallahboulakamine0-web/BDD-d-une-cole" target="_blank"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>     
+       </div>
     </div>
   </section>
-    <section id="certificates">
+
+  <section id="certificates">
     <div class="container">
       <div class="section-title">
         <h2>Mes Certificats</h2>
@@ -330,8 +370,6 @@
       </div>
     </div>
   </section>
-
-
 
   <section id="contact">
     <div class="container">
@@ -379,21 +417,27 @@
             </div>
           </div>
         </div>
-          <div class="back-to-top">
+  <div class="back-to-top">
     <i class="fas fa-arrow-up"></i>
   </div>
 
-  <div id="projectModal" class="modal">
+<div id="projectModal" class="modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
         <h2 id="modalTitle">Titre du Projet</h2>
+        
         <div class="modal-body">
+            <div id="modalBubble" class="project-constraints-bubble" style="display: none;"></div>
+
             <div class="modal-tags" id="modalTags"></div>
             <p id="modalDesc" class="modal-description"></p>
+            
             <div class="modal-tech-details">
                 <h4><i class="fas fa-cogs"></i> Défis Techniques :</h4>
                 <ul id="modalChallenges"></ul>
             </div>
+
+            <div id="modalStyle" class="coding-style-section" style="display: none;"></div>
         </div>
     </div>
   </div>
