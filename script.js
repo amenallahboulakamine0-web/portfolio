@@ -81,7 +81,6 @@ const projectData = {
                         <li><strong>Livrables :</strong> Script DDL complet, Jeu de données de test (>50 étudiants) et 20 requêtes d'extraction de données.</li>
                     </ul>
                 `,
-                "codingStyle": "SQL Standards & Snake Case"
             },
         "demo": {
             "title": "Jeu du Démineur",
