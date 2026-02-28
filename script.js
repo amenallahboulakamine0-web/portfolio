@@ -52,6 +52,29 @@ const projectData = {
             `,
             "codingStyle": "E89 Coding Standard (Norme stricte)"
         },
+        
+        "printf": {
+            "title": "Custom Printf (stu_dprintf)",
+            "description": "Ré-implémentation de la fonction `dprintf` de la bibliothèque standard C. Le programme écrit une chaîne formatée directement sur un descripteur de fichier spécifique en gérant divers spécificateurs et conversions de base.",
+            "tags": ["C", "Fonctions Variadiques", "Parsing", "Criterion (Tests)"],
+            "challenges": [
+                "Utilisation des macros variadiques (`va_start`, `va_arg`, `va_end`) pour gérer un nombre indéfini d'arguments",
+                "Parsing dynamique de la chaîne de format pour identifier et traiter les spécificateurs (`%c`, `%s`, `%d`, `%p`, `%x`, `%b`, `%o`, `%%`) ainsi que le flag `+`",
+                "Implémentation d'algorithmes de conversion de bases (binaire, octal, décimal, hexadécimal)",
+                "Mise en place de tests unitaires complets via le framework Criterion pour valider chaque format"
+            ],
+            "constraints": `
+                <h5><i class="fas fa-exclamation-triangle"></i> Project Constraints & Rules</h5>
+                <p><strong>Contexte :</strong> Projet E89 (2 à 3 semaines, 1-2 personnes).</p>
+                <ul style="margin-top:5px; padding-left:20px;">
+                    <li><strong>Fonctions Autorisées :</strong> Uniquement <code>write</code>, <code>malloc</code>, <code>free</code> et les macros <code>stdarg</code>. Toute autre fonction est interdite.</li>
+                    <li><strong>Livrables :</strong> Bibliothèque statique (<code>printf.a</code>) et binaire de tests (<code>ut.out</code>).</li>
+                    <li><strong>Architecture :</strong> Makefile obligatoire avec règles <code>all, clean, fclean, re</code>. Structure de dossiers stricte (src, include, test).</li>
+                </ul>
+            `,
+            "codingStyle": "E89 Coding Standard (Norme stricte, pénalités par faute)"
+        },
+
         "cash": {
             "title": "Cash Register Algorithm",
             "description": "Algorithme de rendu de monnaie optimisé. Le but est de retourner la monnaie exacte en utilisant le moins de billets et pièces possible depuis un tiroir-caisse défini.",
