@@ -280,7 +280,100 @@ function createAchievementParticles() {
         particlesContainer.remove();
     }, 1200);
 }
+function createFloatingShapes() {
+    const headerContainer = document.querySelector('header .container');
+    if (!headerContainer) return; // Fallback in case header isn't on page
 
+    const container = document.createElement('div');
+    container.className = 'bg-shapes-container';
+    
+    // Inject the spawner directly INTO the header void
+    headerContainer.prepend(container);
+
+    const shapeCount = 100; // Kept low for clean performance and subtlety
+    const shapeTypes = ['shape-square', 'shape-circle', 'shape-pill', 'shape-triangle'];
+
+    for (let i = 0; i < shapeCount; i++) {
+        const shape = document.createElement('div');
+        
+        const randomType = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+        shape.className = `floating-shape ${randomType}`;
+        const size = Math.random() * 60 + 30;
+        const left = Math.random() * 100; 
+        const duration = Math.random() * 25 + 15; 
+        const delay = Math.random() * 20; 
+
+        if (randomType === 'shape-pill') {
+            shape.style.width = `${size * 1.8}px`;
+            shape.style.height = `${size * 0.6}px`;
+        } else {
+            shape.style.width = `${size}px`;
+            shape.style.height = `${size}px`;
+        }
+
+        shape.style.left = `${left}vw`;
+        shape.style.animationDuration = `${duration}s`;
+        shape.style.animationDelay = `-${delay}s`; 
+
+        container.appendChild(shape);
+    }
+}
+function createHeaderShapes() {
+    const header = document.querySelector('header');
+    if (!header) return;
+
+    const container = document.createElement('div');
+    container.className = 'header-shapes-container';
+    header.prepend(container);
+
+    const types = ['shape-square', 'shape-circle', 'shape-pill', 'shape-triangle'];
+
+    for (let i = 0; i < 12; i++) {
+        const shape = document.createElement('div');
+        const type = types[Math.floor(Math.random() * types.length)];
+        shape.className = `floating-shape ${type}`;
+
+        const size = Math.random() * 60 + 30;
+        shape.style.width = type === 'shape-pill' ? `${size * 2}px` : `${size}px`;
+        shape.style.height = type === 'shape-pill' ? `${size / 2}px` : `${size}px`;
+        
+        shape.style.left = `${Math.random() * 100}%`;
+        shape.style.animationDuration = `${Math.random() * 10 + 15}s`;
+        shape.style.animationDelay = `-${Math.random() * 20}s`;
+
+        container.appendChild(shape);
+    }
+}
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(showWelcomeAchievement, 1000);
+    createHeaderShapes();
 });
+
+// This works for both the home page header and the internship header
+function spawnHeaderShapes() {
+    const header = document.querySelector('header .container') || document.querySelector('.internship-header-wrapper');
+    if (!header) return;
+
+    const container = document.createElement('div');
+    container.className = 'header-shapes-container';
+    header.prepend(container);
+
+    const types = ['shape-square', 'shape-circle', 'shape-pill', 'shape-triangle'];
+
+    for (let i = 0; i < 10; i++) {
+        const shape = document.createElement('div');
+        const type = types[Math.floor(Math.random() * types.length)];
+        shape.className = `floating-shape ${type}`;
+        
+        const size = Math.random() * 50 + 20;
+        shape.style.width = type === 'shape-pill' ? `${size * 2}px` : `${size}px`;
+        shape.style.height = type === 'shape-pill' ? `${size / 2}px` : `${size}px`;
+        
+        shape.style.left = `${Math.random() * 100}%`;
+        shape.style.animationDuration = `${Math.random() * 15 + 20}s`;
+        shape.style.animationDelay = `-${Math.random() * 20}s`;
+
+        container.appendChild(shape);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', spawnHeaderShapes);
