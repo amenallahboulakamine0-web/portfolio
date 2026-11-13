@@ -2,9 +2,45 @@ const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
 const navLinks = document.querySelector('.nav-links');
 
 if (mobileMenuBtn && navLinks) {
+    const mobileViewport = window.matchMedia('(max-width: 768px)');
+    const menuLabel = mobileMenuBtn.querySelector('.menu-label');
+
+    function setMenuOpen(open, restoreFocus = false) {
+        navLinks.classList.toggle('active', open);
+        mobileMenuBtn.setAttribute('aria-expanded', String(open));
+        menuLabel.textContent = open ? 'Fermer' : 'Menu';
+        if (restoreFocus) mobileMenuBtn.focus();
+    }
+
     mobileMenuBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
+        setMenuOpen(mobileMenuBtn.getAttribute('aria-expanded') !== 'true');
     });
+
+    navLinks.addEventListener('click', (event) => {
+        if (event.target.closest('a') && mobileViewport.matches) setMenuOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && mobileMenuBtn.getAttribute('aria-expanded') === 'true') {
+            setMenuOpen(false, true);
+        }
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.nav-container')) setMenuOpen(false);
+    });
+
+    document.addEventListener('focusin', (event) => {
+        if (!event.target.closest('.nav-container')) setMenuOpen(false);
+    });
+
+    mobileViewport.addEventListener('change', () => {
+        const focusedLinkWillHide = mobileViewport.matches && navLinks.contains(document.activeElement);
+        setMenuOpen(false, focusedLinkWillHide);
+    });
+
+    // Keep navigation available if JavaScript is disabled or fails to initialize.
+    document.documentElement.classList.add('js');
 }
 
 const backToTopBtn = document.querySelector('.back-to-top');
