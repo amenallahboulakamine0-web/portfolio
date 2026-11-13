@@ -499,3 +499,23 @@ body:has(.internship-section) {
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { transform: translateY(50px); } to { transform: translateY(0); } }
+/* CV-based portfolio content */
+.experience-card { max-width: 960px; margin: 0 auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 18px; padding: 32px; }
+.experience-card h3 { font-size: 1.5rem; margin: 8px 0 16px; }
+.experience-card p { margin-bottom: 20px; }
+.experience-meta, .project-context { color: #475569; font-size: .9rem; }
+.experience-card ul, .project-details ul { padding-left: 22px; }
+.experience-card li, .project-details li { margin-bottom: 10px; }
+.evidence-note { font-size: .85rem !important; color: #475569 !important; margin: 18px 0 0 !important; }
+.skills-grid-wrapper { gap: 32px; }
+.skill-grid { max-height: none; overflow: visible; padding-right: 0; }
+.project-content .project-context, .project-content .project-proof { flex-grow: 0; }
+.project-details { border-top: 1px solid #e2e8f0; padding-top: 16px; }
+.project-details summary { cursor: pointer; color: #3a0ca3; font-weight: 600; padding: 8px 0; }
+.project-details ul { margin-top: 12px; }
+.project-source { display: inline-block; margin-top: 18px; font-weight: 600; }
+.projects-container { grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); }
+section[id] { scroll-margin-top: 90px; }
+@media (max-width: 768px) { .experience-card { padding: 22px; } .skill-grid { grid-template-columns: 1fr 1fr; } }
+
+.back-to-top { border: 0; font-size: 1.6rem; }
