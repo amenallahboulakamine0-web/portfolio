@@ -519,3 +519,12 @@ section[id] { scroll-margin-top: 90px; }
 @media (max-width: 768px) { .experience-card { padding: 22px; } .skill-grid { grid-template-columns: 1fr 1fr; } }
 
 .back-to-top { border: 0; font-size: 1.6rem; }
+
+/* Project imagery and local skill icons */
+.project-image { height: 200px; flex-shrink: 0; background: #eef2ff; }
+.project-content p { flex-grow: 0; }
+.project-details { margin-top: auto; }
+.project-content .project-proof { font-size: .9rem; }
+.skill-card .skill-icon { flex: 0 0 30px; }
+.skill-card { min-width: 0; }
+.skill-card span { overflow-wrap: anywhere; }
