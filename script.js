@@ -67,7 +67,6 @@ function showWelcomeAchievement() {
     const notification = document.createElement('div');
     notification.className = 'achievement-notification';
     notification.innerHTML = `
-        <div class="achievement-icon">🚀</div>
         <div class="achievement-content">
             <div class="achievement-title">Achievement unlocked !</div>
             <div class="achievement-name"> Welcome to my portolio!</div>

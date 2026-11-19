@@ -195,6 +195,7 @@
         "title": "Sky Island Portfolio",
         "context": "Projet interactif · Expérience optionnelle",
         "featured": true,
+        "image": {"src": "public/sky-island.webp", "alt": "Vue du minigolf en 3D sur l’île flottante de Sky Island"},
         "tags": [
           "JavaScript",
           "Three.js",
@@ -425,7 +426,7 @@
     }
   ],
   "interactive": {
-    "cta": "Explore my portfolio in 3D 🎮",
+    "cta": "Explore my portfolio in 3D",
     "subtitle": "Optional interactive experience",
     "projectId": "sky-island"
   },

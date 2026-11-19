@@ -50,5 +50,25 @@
     get html() { return `<h2>${escape(station.title)}</h2>${render[station.section]()}`; },
     origin: WORLD.courseOrigins[index]
   }));
-  window.PortfolioContent = { WORLD, HOLES };
+  // Heights in course-local X/Z coordinates, shared by meshes and golf physics.
+  const fairwayY = hole => hole.groundY + 2 + .2;
+  function surfaceYAt(hole, x, z) {
+    let rise = hole.bridges.some(([bx, bz, w, d]) =>
+      x >= bx && x <= bx + w && z >= bz && z <= bz + d) ? 2 : 0;
+    for (const hill of hole.hills) {
+      const distance = Math.hypot(x - hill.x, z - hill.y);
+      WORLD.hillLayers.forEach((factor, layer) => {
+        if (distance <= hill.r * factor) rise = Math.max(rise, (layer + 1) * WORLD.hillStep);
+      });
+    }
+    return fairwayY(hole) + rise;
+  }
+  function tunnelPosts(tunnel) {
+    const posts = [];
+    for (const x of [tunnel.x, tunnel.x + tunnel.width - 8]) {
+      for (const z of [tunnel.y, tunnel.y + tunnel.depth - 8]) posts.push([x, z, 8, 8]);
+    }
+    return posts;
+  }
+  window.PortfolioContent = { WORLD, HOLES, fairwayY, surfaceYAt, tunnelPosts };
 })();

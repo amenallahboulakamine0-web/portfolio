@@ -15,9 +15,7 @@ function startGame(THREE, CONFIG, HOLES, world) {
     islandCenterX: ISLAND_CENTER_X,
     islandCenterZ: ISLAND_CENTER_Z,
     spawnX: SPAWN_X,
-    spawnZ: SPAWN_Z,
-    hillLayers: HILL_LAYERS,
-    hillStep: HILL_STEP
+    spawnZ: SPAWN_Z
   } = CONFIG;
   const {
     cv,
@@ -116,22 +114,14 @@ function startGame(THREE, CONFIG, HOLES, world) {
     }
   }
 
-  function hillOffset(hole, x, y) {
-    let height = 0;
-    for (const hill of hole.hills) {
-      const distance = Math.hypot(x - hill.x, y - hill.y);
-      HILL_LAYERS.forEach((factor, layer) => {
-        if (distance < hill.r * factor) height = Math.max(height, (layer + 1) * HILL_STEP);
-      });
-    }
-    return height;
-  }
+  const { surfaceYAt, tunnelPosts } = window.PortfolioContent;
+  const solidRects = HOLES.map(hole => hole.walls.concat(hole.tunnels.flatMap(tunnelPosts)));
 
   function ballWorldPosition(x = golfBallState.x, y = golfBallState.y) {
     const hole = HOLES[currentHole];
     return {
       x: hole.origin[0] + x,
-      y: hole.groundY + 2 + BALL_RADIUS + hillOffset(hole, x, y),
+      y: surfaceYAt(hole, x, y) + BALL_RADIUS,
       z: hole.origin[1] + y
     };
   }
@@ -165,7 +155,7 @@ function startGame(THREE, CONFIG, HOLES, world) {
     ballSunk = false;
     sinkProgress = 0;
     dragPosition = null;
-    golfPlane.constant = -(hole.groundY + 2);
+    golfPlane.constant = -surfaceYAt(hole, ...hole.tee);
   }
 
   function nearestHole() {
@@ -334,6 +324,7 @@ function startGame(THREE, CONFIG, HOLES, world) {
   }
 
   function golfPositionFromPointer(event) {
+    golfPlane.constant = -surfaceYAt(HOLES[currentHole], golfBallState.x, golfBallState.y);
     ray.setFromCamera(normalizedPointer(event), camera);
     if (!ray.ray.intersectPlane(golfPlane, hitPoint)) return null;
     const hole = HOLES[currentHole];
@@ -481,7 +472,7 @@ function startGame(THREE, CONFIG, HOLES, world) {
 
   function collideBall() {
     const hole = HOLES[currentHole];
-    const rectangles = hole.walls.slice();
+    const rectangles = solidRects[currentHole].slice();
     hole.movers.forEach(mover => rectangles.push(moverRect(mover)));
 
     for (const [x, y, width, height] of rectangles) {
@@ -627,11 +618,12 @@ function startGame(THREE, CONFIG, HOLES, world) {
       }
     }
     HOLES.forEach(hole => {
-      if (Math.abs(x - (hole.origin[0] + COURSE_WIDTH / 2)) < COURSE_WIDTH / 2 + 40
-        && Math.abs(z - (hole.origin[1] + COURSE_HEIGHT / 2)) < COURSE_HEIGHT / 2 + 40
-        && hole.groundY + 2 > groundHeight
-        && hole.groundY + 2 <= heightLimit) {
-        groundHeight = hole.groundY + 2;
+      const lx = x - hole.origin[0], lz = z - hole.origin[1];
+      const onPad = hole.safe ? hole.safe.some(rect => insideRect(rect, lx, lz))
+        : lx >= -40 && lx <= COURSE_WIDTH + 40 && lz >= -40 && lz <= COURSE_HEIGHT + 40;
+      if (onPad) {
+        const height = surfaceYAt(hole, lx, lz);
+        if (height > groundHeight && height <= heightLimit) groundHeight = height;
       }
     });
     return groundHeight;
@@ -732,7 +724,8 @@ function startGame(THREE, CONFIG, HOLES, world) {
     movers.forEach(({ hole: holeIndex, mover, mesh }) => {
       const hole = HOLES[holeIndex];
       const [x, y, width, height] = moverRect(mover);
-      mesh.position.set(hole.origin[0] + x + width / 2, hole.groundY + 10, hole.origin[1] + y + height / 2);
+      mesh.position.x = hole.origin[0] + x + width / 2;
+      mesh.position.z = hole.origin[1] + y + height / 2;
     });
 
     if (frame % 12 === 0) updateDecorVisibility();
@@ -801,10 +794,10 @@ function startGame(THREE, CONFIG, HOLES, world) {
     let text = "";
     if (ready && !overlayOpen) {
       if (mode === "golf") {
-        text = touch ? "GLISSEZ POUR VISER · RELÂCHEZ POUR TIRER · ◀ ▶ POUR TOURNER" : "GLISSEZ · RELÂCHEZ POUR TIRER · Q/E POUR TOURNER · ⛳ POUR SORTIR";
+        text = touch ? "GLISSEZ POUR VISER · RELÂCHEZ POUR TIRER · BOUTONS POUR TOURNER" : "GLISSEZ · RELÂCHEZ POUR TIRER · Q/E POUR TOURNER · G POUR SORTIR";
       } else {
         const { index, distance } = nearestHole();
-        if (distance <= COURSE_WIDTH * .8) text = `${touch ? "⛳" : "G / ⛳"} POUR JOUER : ${HOLES[index].title.toUpperCase()}`;
+        if (distance <= COURSE_WIDTH * .8) text = `${touch ? "BOUTON GOLF" : "G"} POUR JOUER : ${HOLES[index].title.toUpperCase()}`;
         else text = touch ? "JOYSTICK POUR MARCHER · SAUT / SUPER SAUT · GLISSER POUR REGARDER" : "WASD MARCHER · ESPACE SAUTER · SHIFT+ESPACE SUPER SAUT · SOURIS REGARDER";
       }
     }

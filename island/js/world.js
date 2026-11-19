@@ -13,6 +13,7 @@ function createWorld(THREE, CONFIG, HOLES) {
     hillLayers: HILL_LAYERS,
     hillStep: HILL_STEP
   } = CONFIG;
+  const { fairwayY, surfaceYAt, tunnelPosts } = window.PortfolioContent;
   const $ = id => document.getElementById(id);
   const cv = $("cv");
   const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true });
@@ -227,7 +228,12 @@ function createWorld(THREE, CONFIG, HOLES) {
     const color = new THREE.Color();
     const matrix = new THREE.Matrix4();
     visible.forEach(([layer, column, row], count) => {
-      matrix.setPosition(column * cellSize + cellSize / 2, -cellSize / 2 - layer * cellSize, row * cellSize + cellSize / 2);
+      const x = (column + .5) * cellSize;
+      const z = (row + .5) * cellSize;
+      // Trim only the top face of every voxel touching a course or its foundation.
+      const cut = layer === 0 && overlapsCourseSafety(x, z, cellSize / 2, cellSize / 2) ? 16 : 0;
+      matrix.makeScale(1, (cellSize - cut) / cellSize, 1);
+      matrix.setPosition(x, -cellSize / 2 - layer * cellSize - cut / 2, z);
       island.setMatrixAt(count, matrix);
       color.setHex(layer === 0 ? 0x5fd36a : layer < 3 ? 0x8b5a2b : layer < 6 ? 0x7d8590 : 0x59616d)
         .offsetHSL(0, 0, (random() - .5) * .09);
@@ -337,14 +343,35 @@ function createWorld(THREE, CONFIG, HOLES) {
     sign.rotation.y = rotationY;
   }
 
-  const rampTexture = makeCanvasTexture(128, 64, (context, width, height) => {
-    context.fillStyle = "#174b49";
-    context.fillRect(0, 0, width, height);
-    context.fillStyle = "#f5d36b";
-    context.font = "bold 34px system-ui,sans-serif";
-    context.textAlign = "center";
-    context.fillText("›  ›  ›", width / 2, 43);
-  });
+  // Draw in track coordinates so the arrow and rectangular trigger share a footprint,
+  // even when acceleration runs diagonally across a non-square pad.
+  function boostMaterial(ramp) {
+    const map = makeCanvasTexture(256, 256, (ctx, w, h) => {
+      ctx.fillStyle = "#174b49";
+      ctx.fillRect(0, 0, w, h);
+      ctx.scale(w / ramp.width, h / ramp.depth);
+      ctx.translate(ramp.width / 2, ramp.depth / 2);
+      ctx.rotate(Math.atan2(ramp.direction[1], ramp.direction[0]));
+      const size = Math.min(ramp.width, ramp.depth) / 6;
+      ctx.strokeStyle = "#f5d36b";
+      ctx.lineWidth = size * .4;
+      for (const offset of [-size, size]) {
+        ctx.beginPath();
+        ctx.moveTo(offset - size / 2, -size);
+        ctx.lineTo(offset + size / 2, 0);
+        ctx.lineTo(offset - size / 2, size);
+        ctx.stroke();
+      }
+    });
+    return new THREE.MeshBasicMaterial({ map, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
+  }
+
+  const bounds = new THREE.Box3();
+  function seat(mesh, x, z, top) {
+    mesh.position.set(x, 0, z);
+    mesh.position.y = top - bounds.setFromObject(mesh).min.y;
+    return mesh;
+  }
 
   const movers = [];
   const HILL_SHADES = [0x3f9a55, 0x56b36a, 0x7fd18a];
@@ -353,7 +380,12 @@ function createWorld(THREE, CONFIG, HOLES) {
   HOLES.forEach((hole, index) => {
     const [originX, originZ] = hole.origin;
     const groundY = hole.groundY;
-    const surfaceY = groundY + 2;
+    const surfaceY = fairwayY(hole);
+    const at = (x, z) => surfaceYAt(hole, x - originX, z - originZ);
+    function courseBox(w, h, d, color, x, z, top = at(x, z), emissive = false) {
+      const box = addBox(w, h, d, color, x, 0, z, emissive);
+      return seat(box, x, z, top);
+    }
     const borderWidth = 28;
     const borderHeight = 60;
     const centerX = originX + CW / 2;
@@ -364,31 +396,34 @@ function createWorld(THREE, CONFIG, HOLES) {
       const padX = originX + x + width / 2;
       const padZ = originZ + z + depth / 2;
       addStatic(width + (hole.safe ? 0 : 80), 14, depth + (hole.safe ? 0 : 80), 0x6b7a8a, padX, groundY - 7, padZ);
-      addStatic(width + (hole.safe ? 0 : 80), 4, depth + (hole.safe ? 0 : 80), 0x7d8590, padX, groundY, padZ);
+      addStatic(width + (hole.safe ? 0 : 80), 4, depth + (hole.safe ? 0 : 80), 0x7d8590, padX, surfaceY - 4, padZ);
       if (hole.safe && groundY > 0) addStatic(Math.min(width, 90) * .6, groundY, Math.min(depth, 90) * .6, 0x7d8590, padX, groundY / 2 - 7, padZ);
-      const floor = addBox(width, 2, depth, hole.colors[0], padX, groundY + 1, padZ);
+      const floor = courseBox(width, 2, depth, hole.colors[0], padX, padZ, surfaceY - 2);
+      floor.material.polygonOffset = true;
+      floor.material.polygonOffsetFactor = -1;
+      floor.material.polygonOffsetUnits = -1;
       floor.userData.hole = index;
       floors.push(floor);
     });
 
     [
-      [centerX, originZ - 40 + borderWidth / 2, CW + 80, borderWidth],
-      [centerX, originZ + CH + 40 - borderWidth / 2, CW + 80, borderWidth],
-      [originX - 40 + borderWidth / 2, centerZ, borderWidth, CH + 80],
-      [originX + CW + 40 - borderWidth / 2, centerZ, borderWidth, CH + 80]
+      [centerX, originZ + CONFIG.courseBorder - borderWidth / 2, CW + 2 * (borderWidth - CONFIG.courseBorder), borderWidth],
+      [centerX, originZ + CH - CONFIG.courseBorder + borderWidth / 2, CW + 2 * (borderWidth - CONFIG.courseBorder), borderWidth],
+      [originX + CONFIG.courseBorder - borderWidth / 2, centerZ, borderWidth, CH - 2 * CONFIG.courseBorder],
+      [originX + CW - CONFIG.courseBorder + borderWidth / 2, centerZ, borderWidth, CH - 2 * CONFIG.courseBorder]
     ].forEach(([x, z, width, depth]) => {
-      addStatic(width, borderHeight, depth, 0x5a6b7a, x, groundY + borderHeight / 2, z);
-      addCollisionArea(x, z, width / 2, depth / 2, groundY + borderHeight);
+      courseBox(width, borderHeight, depth, 0x5a6b7a, x, z, surfaceY);
+      addCollisionArea(x, z, width / 2, depth / 2, surfaceY + borderHeight);
     });
 
-    hole.walls.forEach(([x, z, width, height]) => {
-      addStatic(width, 16, height, hole.colors[1], originX + x + width / 2, surfaceY + 8, originZ + z + height / 2, hole.emissive);
+    hole.walls.forEach(([x, z, width, depth]) => {
+      courseBox(width, 16, depth, hole.colors[1], originX + x + width / 2, originZ + z + depth / 2, undefined, hole.emissive);
     });
     hole.circles.forEach(([x, z, radius, bounce = 1]) => {
       const bumper = bounce > 1;
       const obstacle = new THREE.Mesh(UNIT_CYLINDER, material(bumper ? 0xffd166 : 0xf2f6fb, bumper));
       obstacle.scale.set(radius, 16, radius);
-      obstacle.position.set(originX + x, surfaceY + 8, originZ + z);
+      seat(obstacle, originX + x, originZ + z, surfaceYAt(hole, x, z));
       obstacle.castShadow = true;
       world.add(obstacle);
     });
@@ -396,58 +431,72 @@ function createWorld(THREE, CONFIG, HOLES) {
       HILL_LAYERS.forEach((factor, layer) => {
         const mound = new THREE.Mesh(UNIT_CYLINDER, material(HILL_SHADES[layer]));
         mound.scale.set(hill.r * factor, HILL_STEP, hill.r * factor);
-        mound.position.set(originX + hill.x, surfaceY + HILL_STEP * (layer + .5), originZ + hill.y);
+        seat(mound, originX + hill.x, originZ + hill.y, surfaceY + HILL_STEP * layer);
         mound.castShadow = true;
         mound.receiveShadow = true;
         world.add(mound);
       });
     });
     hole.hazards.forEach(([x, z, width, depth]) => {
-      addStatic(width, 1, depth, hole.hazardColor, originX + x + width / 2, surfaceY + .1, originZ + z + depth / 2, true);
+      courseBox(width, .25, depth, hole.hazardColor, originX + x + width / 2, originZ + z + depth / 2, surfaceY, true);
     });
     hole.bridges.forEach(([x, z, width, depth]) => {
-      addStatic(width, 2, depth, 0x9b6a3a, originX + x + width / 2, surfaceY + 1, originZ + z + depth / 2);
+      courseBox(width, 2, depth, 0x9b6a3a, originX + x + width / 2, originZ + z + depth / 2, surfaceY);
     });
     hole.ramps.forEach(ramp => {
       const surface = new THREE.Mesh(
         new THREE.PlaneGeometry(ramp.width, ramp.depth),
-        new THREE.MeshBasicMaterial({ map: rampTexture, transparent: true, side: THREE.DoubleSide })
+        boostMaterial(ramp)
       );
       surface.rotation.x = -Math.PI / 2;
-      surface.rotation.y = -Math.atan2(ramp.direction[1], ramp.direction[0]);
-      surface.position.set(originX + ramp.x + ramp.width / 2, surfaceY + 2.6, originZ + ramp.y + ramp.depth / 2);
+      const x = originX + ramp.x + ramp.width / 2;
+      const z = originZ + ramp.y + ramp.depth / 2;
+      seat(surface, x, z, at(x, z));
       world.add(surface);
     });
     hole.tunnels.forEach(tunnel => {
       const tunnelX = originX + tunnel.x + tunnel.width / 2;
       const tunnelZ = originZ + tunnel.y + tunnel.depth / 2;
-      addStatic(8, 28, 8, hole.colors[1], originX + tunnel.x + 4, surfaceY + 14, tunnelZ - tunnel.depth / 2 + 4, hole.emissive);
-      addStatic(8, 28, 8, hole.colors[1], originX + tunnel.x + tunnel.width - 4, surfaceY + 14, tunnelZ - tunnel.depth / 2 + 4, hole.emissive);
-      addStatic(8, 28, 8, hole.colors[1], originX + tunnel.x + 4, surfaceY + 14, tunnelZ + tunnel.depth / 2 - 4, hole.emissive);
-      addStatic(8, 28, 8, hole.colors[1], originX + tunnel.x + tunnel.width - 4, surfaceY + 14, tunnelZ + tunnel.depth / 2 - 4, hole.emissive);
-      addStatic(tunnel.width, 6, tunnel.depth, hole.colors[1], tunnelX, surfaceY + 31, tunnelZ, hole.emissive);
+      for (const [x, z, width, depth] of tunnelPosts(tunnel)) {
+        courseBox(width, 28, depth, hole.colors[1], originX + x + width / 2, originZ + z + depth / 2, undefined, hole.emissive);
+      }
+      courseBox(tunnel.width, 6, tunnel.depth, hole.colors[1], tunnelX, tunnelZ, at(tunnelX, tunnelZ) + 28, hole.emissive);
     });
     hole.movers.forEach(mover => {
-      const mesh = addBox(mover.w, 16, mover.h, 0xd9534f, 0, groundY + 10, 0, true);
+      // A sliding gate stays at its mounting height as it moves over the edge of a bridge.
+      const middle = (mover.from + mover.to) / 2;
+      const x = (mover.axis === "x" ? middle : mover.x) + mover.w / 2;
+      const z = (mover.axis === "y" ? middle : mover.y) + mover.h / 2;
+      const onBridge = hole.bridges.some(([bx, bz, bw, bd]) =>
+        Math.abs(x - bx - bw / 2) < (mover.w + bw) / 2 &&
+        Math.abs(z - bz - bd / 2) < (mover.h + bd) / 2);
+      const mountY = onBridge ? surfaceY + 2 : surfaceYAt(hole, x, z);
+      const mesh = courseBox(mover.w, 16, mover.h, 0xd9534f, originX + x, originZ + z, mountY, true);
       movers.push({ hole: index, mover, mesh });
     });
 
     const tee = new THREE.Mesh(new THREE.RingGeometry(8, 12, 24), new THREE.MeshBasicMaterial({ color: 0xffffff }));
     tee.rotation.x = -Math.PI / 2;
-    tee.position.set(originX + hole.tee[0], surfaceY + .3, originZ + hole.tee[1]);
+    seat(tee, originX + hole.tee[0], originZ + hole.tee[1], surfaceYAt(hole, ...hole.tee));
+    tee.material.polygonOffset = true;
+    tee.material.polygonOffsetFactor = -2;
+    tee.material.polygonOffsetUnits = -2;
     world.add(tee);
 
     const cup = new THREE.Mesh(new THREE.CircleGeometry(CONFIG.cupRadius, 28), new THREE.MeshBasicMaterial({ color: 0 }));
     cup.rotation.x = -Math.PI / 2;
-    cup.position.set(originX + hole.cup[0], surfaceY + .4, originZ + hole.cup[1]);
+    seat(cup, originX + hole.cup[0], originZ + hole.cup[1], surfaceYAt(hole, ...hole.cup));
+    cup.material.polygonOffset = true;
+    cup.material.polygonOffsetFactor = -2;
+    cup.material.polygonOffsetUnits = -2;
     world.add(cup);
-    addStatic(3, 46, 3, 0xffffff, originX + hole.cup[0], surfaceY + 23, originZ + hole.cup[1]);
+    courseBox(3, 46, 3, 0xffffff, originX + hole.cup[0], originZ + hole.cup[1]);
 
     const flag = new THREE.Mesh(
       new THREE.PlaneGeometry(24, 15),
       new THREE.MeshBasicMaterial({ color: 0xff4d4d, side: THREE.DoubleSide })
     );
-    flag.position.set(originX + hole.cup[0] + 12, surfaceY + 38, originZ + hole.cup[1]);
+    seat(flag, originX + hole.cup[0] + 12, originZ + hole.cup[1], surfaceYAt(hole, ...hole.cup) + 30.5);
     world.add(flag);
     flags.push(flag);
     addSign(originX + 30, groundY + borderHeight + 16, originZ - 70, hole.title.split(" &")[0].toUpperCase());
@@ -501,17 +550,18 @@ function createWorld(THREE, CONFIG, HOLES) {
       const radius = 300 + ((index * 37) % 120);
       const x = originX + CW / 2 + Math.cos(angle) * radius;
       const z = originZ + CH / 2 + Math.sin(angle) * radius;
+      if (overlapsCourseSafety(x, z, 15, 15)) continue;
       addStatic(28, 60 + ((index * 23) % 50), 28, 0x2b3a55, x, 40, z);
       addStatic(30, 4, 30, 0x00e5ff, x, 70 + ((index * 7) % 9), z, true);
     }
-    addStatic(20, 180, 20, 0x0b1c2e, originX + CW / 2, 90, originZ + CH / 2);
-    addStatic(24, 4, 24, 0x3dffb0, originX + CW / 2, 185, originZ + CH / 2, true);
+    addStatic(20, 180, 20, 0x0b1c2e, originX + CW / 2, 90, originZ - 230);
+    addStatic(24, 4, 24, 0x3dffb0, originX + CW / 2, 185, originZ - 230, true);
     for (let index = 0; index < 6; index++) {
       const angle = index / 6 * Math.PI * 2;
       addStatic(12, 12, 12, 0x00e5ff,
         originX + CW / 2 + Math.cos(angle) * 160,
         120 + Math.sin(index * 1.7) * 20,
-        originZ + CH / 2 + Math.sin(angle) * 160,
+        originZ - 230 + Math.sin(angle) * 160,
         true
       );
     }
@@ -524,10 +574,10 @@ function createWorld(THREE, CONFIG, HOLES) {
     addBuilding(originX - 200, originZ + CH + 140, 70, 70, 80, 0x6d7b8a);
     addBuilding(originX + CW + 200, originZ + CH + 140, 70, 70, 100, 0xc0392b);
     const fountain = new THREE.Mesh(new THREE.CylinderGeometry(30, 34, 14, 16), material(0xdfe6ee));
-    fountain.position.set(originX + CW / 2, 7, originZ + CH / 2);
+    fountain.position.set(originX + CW / 2, 7, originZ - 100);
     fountain.castShadow = true;
     world.add(fountain);
-    addStatic(6, 40, 6, 0x9fb3c8, originX + CW / 2, 30, originZ + CH / 2);
+    addStatic(6, 40, 6, 0x9fb3c8, originX + CW / 2, 30, originZ - 100);
     for (let index = 0; index < 10; index++) {
       addTree(originX - 180 + index * 70, originZ - 180, .8);
       addTree(originX - 180 + index * 70, originZ + CH + 180, .8);
@@ -826,7 +876,7 @@ function createWorld(THREE, CONFIG, HOLES) {
   scene.add(golfBall);
   const teeBalls = HOLES.map(hole => {
     const teeBall = new THREE.Mesh(new THREE.SphereGeometry(R, 14, 10), material(0xffffff));
-    teeBall.position.set(hole.origin[0] + hole.tee[0], hole.groundY + 2 + R, hole.origin[1] + hole.tee[1]);
+    teeBall.position.set(hole.origin[0] + hole.tee[0], surfaceYAt(hole, ...hole.tee) + R, hole.origin[1] + hole.tee[1]);
     scene.add(teeBall);
     return teeBall;
   });

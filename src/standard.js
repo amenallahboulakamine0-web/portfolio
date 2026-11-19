@@ -21,8 +21,8 @@
     <h1>${escape(data.profile.name)}</h1><p class="tagline">${escape(data.profile.tagline)}</p>
     <div class="cta-container"><a href="${asset('internship.html')}" class="stage-cta">${escape(data.recruitment.cta)}</a></div>
     <div class="header-badges">${data.profile.badges.map(badge => `<div class="badge">${escape(badge)}</div>`).join('')}</div>
-    <div class="header-links">${data.profile.links.map(item => item.type === 'cv' ? cvLink(item.label) : link(item)).join('')}</div>
-    <div class="island-invitation"><a class="island-cta" href="${escape(routes.island)}" aria-describedby="island-subtitle">${escape(data.interactive.cta)}</a><p id="island-subtitle">${escape(data.interactive.subtitle)}</p></div>`;
+    <div class="header-links">${data.profile.links.map(item => item.type === 'cv' ? cvLink(item.label) : link(item)).join('')}</div>`;
+  document.getElementById('island-invitation').innerHTML = `<a class="btn island-cta" href="${escape(routes.island)}" aria-describedby="island-subtitle">${escape(data.interactive.cta)}</a><p id="island-subtitle">${escape(data.interactive.subtitle)}</p>`;
 
   section('about', `<div class="about-content"><div class="about-text"><h3>${escape(data.about.heading)}</h3>${data.about.paragraphs.map(paragraph => `<p>${escape(paragraph)}</p>`).join('')}<a href="#contact" class="btn">Me contacter</a></div></div>`);
   section('experience', data.experience.items.map(item => `<article class="experience-card"><div class="experience-meta">${escape(item.meta)}</div><h3>${escape(item.title)}</h3><p>${escape(item.summary)}</p><div class="project-tech">${tags(item.tags)}</div>${list(item.achievements)}</article>`).join(''));
