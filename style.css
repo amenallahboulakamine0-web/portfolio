@@ -551,14 +551,6 @@ section[id] { scroll-margin-top: 90px; }
   .mobile-quick-actions a:focus-visible { outline-offset: 2px; }
 }
 
-/* The 3D experience is an explicit link, never a background download. */
-.island-invitation { text-align: center; padding: 24px 16px 0; }
-.island-invitation p { margin: 8px 0 0; color: #495466; font-size: .9rem; }
-.island-cta:focus-visible { outline: 3px solid var(--secondary); outline-offset: 4px; }
-.featured-project { border: 2px solid #6846d6; }
-.island-project-banner { display: flex; align-items: center; justify-content: space-between; padding: 32px; background: linear-gradient(135deg, #172450, #4430a5); color: white; }
-.island-project-banner > span:first-child { font-size: 2rem; line-height: 1.1; font-weight: 800; letter-spacing: .12em; }
-.island-project-mark { border: 2px solid #86efac; color: #86efac; font-size: 1.7rem; padding: 12px; transform: rotate(-8deg); border-radius: 12px; font-weight: 700; }
 .contact-social-links { display: flex; flex-wrap: wrap; gap: 16px; }
 #portfolio-main .project-source a:focus-visible { outline: 3px solid #3a0ca3; outline-offset: 4px; }
 @media (max-width: 768px) { .contact-social-links { justify-content: center; } }

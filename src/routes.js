@@ -6,7 +6,6 @@
   const page = root.protocol === "file:" ? "index.html" : "";
   window.PortfolioRoutes = Object.freeze({
     root: new URL(page, root).href,
-    island: new URL("island/" + page, root).href,
     asset: path => new URL(path, root).href
   });
 })();

@@ -1,4 +1,4 @@
-// Shared editorial data for both routes. Asset paths are relative to the site root.
+// Shared editorial data for the portfolio. Asset paths are relative to the site root.
 (function () {
   "use strict";
   window.PortfolioData = {
@@ -190,32 +190,6 @@
     "title": "Mes projets",
     "subtitle": "Une sélection de travaux en développement web, en C et en infrastructure",
     "items": [
-      {
-        "id": "sky-island",
-        "title": "Sky Island Portfolio",
-        "context": "Projet interactif · Expérience optionnelle",
-        "featured": true,
-        "image": {"src": "public/sky-island.webp", "alt": "Vue du minigolf en 3D sur l’île flottante de Sky Island"},
-        "tags": [
-          "JavaScript",
-          "Three.js",
-          "Physique",
-          "Optimisation du rendu"
-        ],
-        "description": "Un portfolio sur une île flottante en 3D, à explorer à pied et à travers sept parcours de mini-golf",
-        "skills": "Simulation physique sur un plan, rendu 3D et organisation des géométries pour réduire les appels de dessin",
-        "details": [
-          "Moteur de golf personnalisé : rebonds, pentes, obstacles mobiles et zones de danger",
-          "Monde voxel avec géométries statiques regroupées et cubes instanciés",
-          "Chargement du moteur 3D uniquement sur la page dédiée, avec commandes clavier et tactiles"
-        ],
-        "links": [
-          {
-            "label": "Explorer Sky Island",
-            "route": "island"
-          }
-        ]
-      },
       {
         "id": "pokedex",
         "title": "Pokédex SPA",
@@ -424,43 +398,6 @@
       "title": "Piano Tiles",
       "href": "https://amenallahboulakamine0-web.github.io/piano-tiles/"
     }
-  ],
-  "interactive": {
-    "cta": "Explore my portfolio in 3D",
-    "subtitle": "Optional interactive experience",
-    "projectId": "sky-island"
-  },
-  "island": {
-    "stations": [
-      {
-        "section": "about",
-        "title": "À propos"
-      },
-      {
-        "section": "skills",
-        "title": "Compétences"
-      },
-      {
-        "section": "projects",
-        "title": "Projets"
-      },
-      {
-        "section": "experience",
-        "title": "Expérience"
-      },
-      {
-        "section": "education",
-        "title": "Formation"
-      },
-      {
-        "section": "languages",
-        "title": "Langues & Méthode"
-      },
-      {
-        "section": "contact",
-        "title": "Contact"
-      }
-    ]
-  }
+  ]
 };
 })();
