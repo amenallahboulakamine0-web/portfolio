@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Amenallah Boulakamine — Sky Island Portfolio</title>
+    <link rel="stylesheet" href="./css/styles.css">
+  </head>
+  <body>
+    <nav id="island-hud" aria-label="Portfolio shortcuts">
+      <a id="island-back" href="../index.html">Back to portfolio</a>
+      <a id="island-cv" download>CV</a>
+      <a id="island-contact">Contact</a>
+    </nav>
+    <canvas id="cv"></canvas>
+    <div id="ui">
+      <div id="pwb"><i id="pwi"></i></div>
+      <div id="jumpbar"><i id="jumpfill"></i></div>
+      <div id="hint"></div>
+      <button id="gb" aria-label="Golf ball camera" title="Golf ball camera (G)">
+        <i style="left:14px;top:12px"></i>
+        <i style="left:26px;top:10px"></i>
+        <i style="left:34px;top:20px"></i>
+        <i style="left:20px;top:22px"></i>
+        <i style="left:12px;top:30px"></i>
+        <i style="left:30px;top:33px"></i>
+        <i style="left:23px;top:40px"></i>
+      </button>
+    </div>
+    <div id="mirror">
+      <div class="panel">
+        <h1></h1>
+        <p id="island-profile-tagline"></p>
+        <p class="s" id="island-recruitment"></p>
+        <small>Touchez le miroir</small>
+      </div>
+    </div>
+    <div id="toast"></div>
+    <div id="loading">Chargement du monde…</div>
+    <div id="ov"></div>
+    <script src="../src/data/portfolioData.js"></script>
+    <script src="../src/routes.js"></script>
+    <script src="./js/bootstrap.js" defer></script>
+  </body>
+</html>
